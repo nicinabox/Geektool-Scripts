@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+#-----------------------------------#
+#		Written by Nic H			#
+#		Modified by Chris B			#
+#-----------------------------------#
+
+# Place "rtm" in /sbin and chmod 755 for system-wide usage
+# or replace rtm command with path variable
+# my $path = "/*path*/rtm";
+
+use strict;
+use warnings;
+
+my @tasks = (
+	[ "Overdue", "'dueBefore:today AND status:incomplete'" ],
+	[ "Today", "'due:today AND status:incomplete'" ],
+	[ "Tomorrow", "'due:tomorrow AND status:incomplete'" ],
+	[ "Next 7 Days", "'dueWithin:\"1 week\" AND dueAfter:tomorrow AND status:incomplete'" ],
+	[ "Other", "'due:never AND status:incomplete'" ],
+#	[ "Completed Recently", "'status:completed AND completedWithin:\"1 week of today\"'" ],
+		);
+		
+my $i = 0;
+foreach(@tasks){
+	
+	my $task = `rtm --filter $tasks[$i][1]`;
+	if($task){
+		print "- $tasks[$i][0] - \n";
+		print "$task\n";
+	}
+	$i++;
+}

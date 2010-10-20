@@ -1,0 +1,27 @@
+#!/usr/bin/perl                                                                                                         
+# a little script to get your network status                                                                            
+
+$en0_info = `ifconfig en0 | grep "inet" | grep -v 127.0.0.1`;
+$en1_info = `ifconfig en1 | grep "inet" | grep -v 127.0.0.1`;
+$airport_info = `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I`;
+
+if($en0_info)
+{
+    $en0_info =~ /inet (.*) netmask/s;
+    $output .= "Ethernet : $1\n";
+
+}
+else
+{ $output .= "Ethernet : INACTIVE\n";}
+
+
+if($en1_info)
+{
+    $en1_info =~ /inet (.*) netmask/s;
+    $en1_info = $1;
+    $output .= "Airport  : $en1_info\n\n";
+}
+else
+{ $output .= "Airport  : INACTIVE\n\n";}
+
+print "$output";

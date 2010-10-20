@@ -1,0 +1,8 @@
+TZ=US/Hawaii date +"Hawaii   :  %I:%M %p %a"
+TZ=Etc/UTC date +"UK       :  %I:%M %p %a"
+TZ=Europe/London date +"London   :  %I:%M %p %a"
+TZ=Europe/Stockholm date +"Sweden   :  %I:%M %p %a"
+TZ=Europe/Berlin date +"Germany  :  %I:%M %p %a"
+TZ=Etc/UTC-8 date +"Maylasia :  %I:%M %p %a"
+
+
