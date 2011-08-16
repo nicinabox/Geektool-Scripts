@@ -1,0 +1,185 @@
+h1. Installing 
+
+@Current version: 0.7@
+
+Note: this step can be skipped if you’re using the gem.
+
+Copy files to a directory in your PATH. I recommend @/usr/local/bin@. This will make the commands accessible by just typing the name of it. Be sure to give them permissions (755 should be fine).
+
+h2. Uptime
+
+Displays your system's uptime.
+
+<pre>
+  uptime | awk '{print "Uptime : " $3 " " $4 " " $5 }' | sed -e 's/.$//g'
+</pre>
+<pre>
+  Uptime : 25 days, 8:28
+</pre>
+
+h2. Network Info
+
+h3. Internal IP
+
+Displays your Wifi or Ethernet IP. Also see "IP script":#script_ip
+
+<pre>
+  ifconfig en1 | grep "inet " | awk '{print $2}'
+</pre>
+<pre>
+  192.168.1.2
+</pre>
+
+h3. External IP
+
+Displays your external IP
+
+<pre>
+  curl -s www.whatismyip.com/automation/n09230945.asp | awk {'print "External : " $1'}
+</pre>
+<pre>
+  External: 72.45.123.12
+</pre>
+
+h2. Calendar
+
+<pre>
+  cal | sed "s/^/ /;s/$/ /;s/ $(date +%e) / $(date +%e | sed 's/./#/g') /"
+</pre>
+<pre>
+      July 2009 
+  Su Mo Tu We Th Fr Sa 
+            1  2  3  4 
+   5  6  7  8  9 ## 11 
+  12 13 14 15 16 17 18 
+  19 20 21 22 23 24 25 
+  26 27 28 29 30 31 
+</pre>
+
+h2. Memory Usage
+
+Prints out total Memory Usage
+
+<pre>
+  top -l 1 | awk '/PhysMem/ {print "Used: " $8}'
+  top -l 1 | awk '/PhysMem/ {print "Inactive:  " $6+$10"M"}'
+</pre>	
+<pre>
+  Used:  1769M 
+  Inactive:  688M
+</pre>
+
+h2. CPU (horizontal)
+
+<pre>
+  top -l 1| awk '/CPU usage/ {print $6, $7, $8, $9, $10, $11, $12, $13}'
+</pre>	
+<pre>
+  CPU usage: 22.22% user, 71.11% sys, 6.67% idle
+</pre>
+
+h2. CPU (vertical)
+
+<pre>
+  echo CPU usage
+  top -l 1| awk '/CPU usage/ {print $8, $9}'
+  top -l 1| awk '/CPU usage/ {print $10, $11}'
+  top -l 1| awk '/CPU usage/ {print $12, $13}'
+</pre>	
+<pre>
+  CPU usage
+  22.22% user,
+  71.11% sys,
+  6.67% idle	
+</pre>
+
+
+h2. Weather
+
+"Yweather":http://code.google.com/p/yweather/downloads/list is recommended for this. Because Yweather creates a local copy of the weather from Yahoo, it needs write permissions. Please place the script somewhere it can do this (ie, @/Users/nic/bin/yweather.pl@)
+
+Yweather is not included in this package, but you can "download it from Google Code":http://code.google.com/p/yweather/downloads/list. *Please read the help file when using this script. I did not write it and will not provide support for it.*
+
+h3. Current Temperature
+
+<pre>/Users/nic/bin/yweather.pl -ft1</pre>	
+<pre>81</pre>
+<h3>Current Conditions</h3>
+<pre>/Users/nic/bin/yweather.pl -ft1</pre>	
+<pre>Partly Cloudy</pre>
+
+h2. Unread Gmail
+
+This script requires a username and password. You must edit it before use. Replace @USERNAME@ & @PASSWORD@ with your username and password.
+_Credits to Greg Newman for this script_
+<pre>gmail</pre>	
+<pre class="out">3 Unread</pre>
+
+h2(#script_ip). IP Address
+
+
+<pre>ipaddress</pre>	
+<pre>
+  Ethernet : INACTIVE
+  Airport : 161.45.27.132
+</pre>
+
+h2. Remember the Milk
+
+"More info":http://www.rutschle.net/rtm/ for this script. There have been instances where users have needed Xcode for Perl to compile modules correctly.
+
+h3. Install
+
+<pre>sudo cpan install WebService::RTMAgent</pre>	
+
+h3. Setup
+
+<pre>rtm --authorise</pre>
+
+Copy and paste the link into your browser and authorize it. Use @rtm --help@  for more info
+
+h3. Usage
+
+<pre>todo</pre>
+<pre>
+  - Overdue - 
+  Turn in Fall Net tech and LTL list to payroll
+  Format computers in Smith for Cummings
+
+  - Next 7 Days - 
+  Turn in Payroll
+
+  - Other - 
+  resnet payroll system
+  Internship Journal
+  Buy 4 quarts oil
+</pre>	
+
+h2. Current Wifi Network
+
+<pre>airport</pre>	
+<pre>Network: DD-WRT</pre>
+
+h2. Timezones
+
+A few examples are provided in the @tzones@ file. You will need to edit this file to add more timezones.
+
+<pre>tzones</pre>	
+<pre>
+  Hawaii   :  04:04 PM Fri
+  UK       :  02:04 AM Sat
+  London   :  03:04 AM Sat
+  Sweden   :  04:04 AM Sat
+  Germany  :  04:04 AM Sat
+  Maylasia :  10:04 AM Sat
+</pre>
+
+h2. Network Traffic
+
+_Credits to "Chris Helming":mailto:chris.helming@gmail.com_
+
+<pre>network</pre>	
+<pre>
+  In: 598 kb/s
+  Out: 13 kb/s
+</pre>
